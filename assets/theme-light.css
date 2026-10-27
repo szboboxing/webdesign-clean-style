@@ -1,0 +1,31 @@
+/* 明亮清新版 —— 暖纸编辑风：白纸卡 + 青绿/陶土双点色 + 暖调柔影 */
+:root{color-scheme:light}
+:root{
+  --bg:#FFFCF6;
+  --paper:#FFFFFF;
+  --paper2:#FAF3E9;
+  --ink:#241F1A;
+  --ink2:#4C453D;
+  --muted:#6E6558;
+  --hair:rgba(36,31,26,.10);
+  --rim:rgba(36,31,26,.04);
+  --accent:#17A398;
+  --accent-w:rgba(23,163,152,.10);
+  --accent2:#D2705F;
+  --accent2-w:rgba(210,112,95,.10);
+  --accent-ink:#0E7C73;
+  --accent2-ink:#B4523F;
+  --on-accent:#FFFFFF;
+  --on-accent2:#FFFFFF;
+  --sh:0 20px 40px -28px rgba(60,48,34,.30),0 3px 10px -6px rgba(60,48,34,.10);
+  --shh:0 30px 56px -28px rgba(60,48,34,.36),0 8px 18px -10px rgba(60,48,34,.14);
+  --nav:rgba(255,252,246,.84);
+  --herobg:linear-gradient(168deg,#FFFFFF 0%,#FFF7EA 100%);
+  --glow-a:.34;
+  --glow-b:.26;
+  --codebg:#FBF6EC;
+  --codeink:#33302B;
+  --codecap:#6E6558;
+  --codebtn:rgba(36,31,26,.06);
+  --codehair:rgba(36,31,26,.08);
+}

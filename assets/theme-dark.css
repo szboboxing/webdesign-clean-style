@@ -1,0 +1,33 @@
+/* 暗黑忧郁版 —— 深夜书房：冷调石墨蓝底 + 雾蓝/暗紫双点色 + 顶部细高光边 + 暗角氛围 */
+html[data-theme=dark]{color-scheme:dark}
+html[data-theme=dark]{
+  --bg:#101318;
+  --paper:#171B21;
+  --paper2:#1E232B;
+  --ink:#E4E8F0;
+  --ink2:#B7BECA;
+  --muted:#8E97A6;
+  --hair:rgba(228,232,240,.10);
+  --rim:rgba(255,255,255,.06);
+  --accent:#7FA8C9;
+  --accent-w:rgba(127,168,201,.15);
+  --accent2:#A98BB0;
+  --accent2-w:rgba(169,139,176,.15);
+  --accent-ink:#9CC3E0;
+  --accent2-ink:#C0A5C6;
+  --on-accent:#101318;
+  --on-accent2:#101318;
+  --sh:0 22px 44px -28px rgba(0,0,0,.72),0 3px 12px -8px rgba(0,0,0,.45);
+  --shh:0 32px 60px -28px rgba(0,0,0,.82),0 10px 22px -12px rgba(0,0,0,.5);
+  --nav:rgba(16,19,24,.82);
+  --herobg:linear-gradient(168deg,#1A1E25 0%,#11141A 100%);
+  --glow-a:.20;
+  --glow-b:.16;
+  --codebg:#0D1014;
+  --codeink:#DCE3EC;
+  --codecap:#8E97A6;
+  --codebtn:rgba(228,232,240,.08);
+  --codehair:rgba(228,232,240,.10);
+  --vignette:radial-gradient(120% 80% at 50% 0%,rgba(127,168,201,.05),transparent 60%),
+             radial-gradient(100% 70% at 50% 110%,rgba(0,0,0,.35),transparent 70%);
+}

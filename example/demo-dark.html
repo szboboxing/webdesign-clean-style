@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#FFFCF6">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101318">
+<title>简洁风格页面 · 组件样例</title>
+<style>/* 明亮清新版 —— 暖纸编辑风：白纸卡 + 青绿/陶土双点色 + 暖调柔影 */
+:root{color-scheme:light}
+:root{
+  --bg:#FFFCF6;
+  --paper:#FFFFFF;
+  --paper2:#FAF3E9;
+  --ink:#241F1A;
+  --ink2:#4C453D;
+  --muted:#6E6558;
+  --hair:rgba(36,31,26,.10);
+  --rim:rgba(36,31,26,.04);
+  --accent:#17A398;
+  --accent-w:rgba(23,163,152,.10);
+  --accent2:#D2705F;
+  --accent2-w:rgba(210,112,95,.10);
+  --accent-ink:#0E7C73;
+  --accent2-ink:#B4523F;
+  --on-accent:#FFFFFF;
+  --on-accent2:#FFFFFF;
+  --sh:0 20px 40px -28px rgba(60,48,34,.30),0 3px 10px -6px rgba(60,48,34,.10);
+  --shh:0 30px 56px -28px rgba(60,48,34,.36),0 8px 18px -10px rgba(60,48,34,.14);
+  --nav:rgba(255,252,246,.84);
+  --herobg:linear-gradient(168deg,#FFFFFF 0%,#FFF7EA 100%);
+  --glow-a:.34;
+  --glow-b:.26;
+  --codebg:#FBF6EC;
+  --codeink:#33302B;
+  --codecap:#6E6558;
+  --codebtn:rgba(36,31,26,.06);
+  --codehair:rgba(36,31,26,.08);
+}
+/* 暗黑忧郁版 —— 深夜书房：冷调石墨蓝底 + 雾蓝/暗紫双点色 + 顶部细高光边 + 暗角氛围 */
+html[data-theme=dark]{color-scheme:dark}
+html[data-theme=dark]{
+  --bg:#101318;
+  --paper:#171B21;
+  --paper2:#1E232B;
+  --ink:#E4E8F0;
+  --ink2:#B7BECA;
+  --muted:#8E97A6;
+  --hair:rgba(228,232,240,.10);
+  --rim:rgba(255,255,255,.06);
+  --accent:#7FA8C9;
+  --accent-w:rgba(127,168,201,.15);
+  --accent2:#A98BB0;
+  --accent2-w:rgba(169,139,176,.15);
+  --accent-ink:#9CC3E0;
+  --accent2-ink:#C0A5C6;
+  --on-accent:#101318;
+  --on-accent2:#101318;
+  --sh:0 22px 44px -28px rgba(0,0,0,.72),0 3px 12px -8px rgba(0,0,0,.45);
+  --shh:0 32px 60px -28px rgba(0,0,0,.82),0 10px 22px -12px rgba(0,0,0,.5);
+  --nav:rgba(16,19,24,.82);
+  --herobg:linear-gradient(168deg,#1A1E25 0%,#11141A 100%);
+  --glow-a:.20;
+  --glow-b:.16;
+  --codebg:#0D1014;
+  --codeink:#DCE3EC;
+  --codecap:#8E97A6;
+  --codebtn:rgba(228,232,240,.08);
+  --codehair:rgba(228,232,240,.10);
+  --vignette:radial-gradient(120% 80% at 50% 0%,rgba(127,168,201,.05),transparent 60%),
+             radial-gradient(100% 70% at 50% 110%,rgba(0,0,0,.35),transparent 70%);
+}
+/* 共用结构件：布局 / 吸顶药丸导航 / 进度条 / Hero / 目录卡 / 表格 / 列表符 / 代码块 / 打印 / 响应式
+   只认 token，不写死颜色。两套主题在 theme-light.css 与 theme-dark.css 里定义 token。 */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.78;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;
+  transition:background .35s ease,color .35s ease}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:var(--vignette,none)}
+.wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:0 clamp(14px,3.6vw,28px) 84px}
+a{color:var(--accent-ink,var(--accent));text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:ui-monospace,"JetBrains Mono","Cascadia Mono",Consolas,"SF Mono",monospace}
+:not(pre)>code{background:var(--accent-w);color:var(--ink);padding:.13em .42em;border-radius:6px;font-size:.9em}
+
+.progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:60;background:transparent}
+.progress i{display:block;height:100%;width:0;border-radius:0 3px 3px 0;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear}
+
+nav.pills{position:sticky;top:3px;z-index:55;display:flex;gap:7px;align-items:center;
+  padding:11px clamp(12px,3.4vw,26px);overflow-x:auto;scrollbar-width:none;
+  background:var(--nav);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px)}
+nav.pills::-webkit-scrollbar{display:none}
+nav.pills a{flex:0 0 auto;font-size:12.6px;padding:7px 14px;border-radius:999px;color:var(--ink2);
+  background:var(--paper);box-shadow:0 1px 0 var(--hair);white-space:nowrap;transition:.2s ease}
+nav.pills a:hover{transform:translateY(-2px);color:var(--ink)}
+nav.pills a.on{background:var(--accent-ink,var(--accent));color:var(--on-accent,#fff);
+  box-shadow:0 8px 18px -8px var(--accent)}
+.tools{margin-left:auto;display:flex;gap:7px;flex:0 0 auto;padding-left:10px}
+.tbtn{border:0;cursor:pointer;font:inherit;font-size:12.4px;padding:7px 13px;border-radius:999px;
+  background:var(--paper);color:var(--ink2);box-shadow:0 1px 0 var(--hair);white-space:nowrap}
+.tbtn.act{background:var(--accent2-ink,var(--accent2));color:var(--on-accent2,#fff)}
+
+.hero{position:relative;overflow:hidden;border-radius:28px;margin:clamp(16px,4vw,30px) 0 26px;
+  padding:clamp(26px,5.4vw,50px) clamp(20px,5vw,46px) clamp(28px,5vw,46px);
+  background:var(--herobg);box-shadow:var(--sh);border-top:1px solid var(--rim)}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(70px);
+  z-index:0;pointer-events:none}
+.hero::before{width:460px;height:460px;left:-130px;top:-190px;background:var(--accent);opacity:var(--glow-a,.3)}
+.hero::after{width:400px;height:400px;right:-110px;bottom:-180px;background:var(--accent2);opacity:var(--glow-b,.22)}
+.hero>*{position:relative;z-index:1}
+.kicker{font-size:11.6px;letter-spacing:.19em;color:var(--muted);display:flex;align-items:center;gap:8px}
+.kicker i{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block}
+h1{margin:12px 0 10px;font-size:clamp(25px,4.6vw,40px);line-height:1.24;letter-spacing:-.015em;font-weight:800}
+.lede{margin:0;max-width:66ch;color:var(--ink2);font-size:clamp(14.6px,1.6vw,16.6px)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{font-size:12.2px;padding:5px 12px;border-radius:999px;background:var(--paper2);color:var(--ink2)}
+
+.cards{display:grid;gap:14px;grid-template-columns:repeat(4,minmax(0,1fr));margin:0 0 34px}
+.card{display:block;background:var(--paper);border-radius:22px;padding:20px 19px;color:inherit;
+  box-shadow:var(--sh);border-top:1px solid var(--rim);
+  transition:transform .24s cubic-bezier(.2,.7,.3,1),box-shadow .24s ease}
+.card:hover{transform:translateY(-7px);box-shadow:var(--shh);text-decoration:none}
+.card .n{font-size:11.4px;letter-spacing:.13em;color:var(--muted)}
+.card .t{display:block;font-size:16.4px;font-weight:700;margin:8px 0 6px}
+.card.a .t{color:var(--accent-ink,var(--accent))}
+.card.b .t{color:var(--accent2-ink,var(--accent2))}
+.card .d{font-size:13px;color:var(--muted);line-height:1.62}
+
+.sec{margin:0 0 30px;scroll-margin-top:92px}
+h2{display:flex;align-items:center;gap:12px;margin:0 0 16px;
+  font-size:clamp(19px,2.7vw,25px);line-height:1.4;font-weight:750}
+.badge{flex:0 0 auto;width:36px;height:36px;border-radius:11px;display:grid;place-items:center;
+  font-size:15px;font-weight:800;background:var(--accent-w);color:var(--accent-ink,var(--accent))}
+.sec.alt .badge{background:var(--accent2-w);color:var(--accent2)}
+h3{font-size:17px;margin:24px 0 11px;padding-left:12px;border-left:3px solid var(--accent);font-weight:700}
+.sec.alt h3{border-left-color:var(--accent2)}
+p{margin:0 0 13px;color:var(--ink2)}
+.sec>ul,.sec>ol,.sec>p,.sec>.tw,.sec>figure,.sec>aside{padding:0 clamp(0px,1.2vw,8px)}
+ul,ol{margin:0 0 15px;padding:0;list-style:none}
+li{position:relative;padding-left:28px;margin:0 0 8px;color:var(--ink2)}
+ul>li::before{content:"";position:absolute;left:8px;top:.63em;width:6px;height:6px;border-radius:50%;
+  background:var(--accent)}
+ol{counter-reset:c}
+ol>li{counter-increment:c}
+ol>li::before{content:counter(c);position:absolute;left:1px;top:.16em;width:21px;height:21px;border-radius:50%;
+  display:grid;place-items:center;font-size:11.6px;font-weight:700;background:var(--accent-w);color:var(--accent)}
+li .sub{display:block;margin-top:4px;font-size:13.4px;color:var(--muted)}
+.dotrule{text-align:center;color:var(--muted);font-size:15px;letter-spacing:.55em;margin:30px 0;user-select:none}
+.note{background:var(--accent2-w);border-radius:18px;padding:16px 19px;margin:0 0 24px;
+  color:var(--ink2);font-size:14.2px}
+
+.tw{overflow-x:auto;border-radius:16px;background:var(--paper);box-shadow:var(--sh);margin:0 0 22px;
+  border-top:1px solid var(--rim);-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:13.6px;min-width:470px}
+th{background:var(--paper2);color:var(--muted);font-weight:600;font-size:11.8px;letter-spacing:.05em;
+  text-align:left;padding:12px 15px;white-space:nowrap}
+th.r{text-align:right}
+td{padding:12px 15px;vertical-align:top;color:var(--ink2);border-top:1px solid var(--hair)}
+tbody tr:first-child td{border-top:0}
+tbody tr:hover td{background:var(--accent-w)}
+td:first-child{color:var(--ink);font-weight:600}
+
+figure.code{margin:0 0 22px;border-radius:18px;background:var(--codebg);box-shadow:var(--sh);
+  overflow:hidden;border-top:1px solid var(--rim)}
+figure.code figcaption{display:flex;align-items:center;gap:10px;padding:10px 15px;font-size:12.2px;
+  color:var(--codecap);border-bottom:1px solid var(--codehair)}
+figure.code figcaption span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font-family:ui-monospace,Consolas,monospace}
+.cp{border:0;cursor:pointer;font:inherit;font-size:11.8px;padding:4px 11px;border-radius:999px;
+  background:var(--codebtn);color:var(--codeink);transition:.2s}
+.cp:hover,.cp.ok{background:var(--accent-ink,var(--accent));color:var(--on-accent,#fff)}
+figure.code pre{margin:0;padding:16px 17px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+figure.code code{font-size:12.6px;line-height:1.75;color:var(--codeink);white-space:pre}
+
+#top{position:fixed;right:clamp(12px,3vw,24px);bottom:clamp(14px,3vw,24px);z-index:58;width:46px;height:46px;
+  border-radius:50%;border:0;cursor:pointer;font-size:18px;background:var(--paper);color:var(--accent);
+  box-shadow:var(--shh);opacity:0;transform:translateY(14px);pointer-events:none;transition:.26s ease}
+#top.show{opacity:1;transform:none;pointer-events:auto}
+#top:hover{background:var(--accent-ink,var(--accent));color:var(--on-accent,#fff)}
+.foot{margin-top:34px;padding-top:18px;border-top:1px solid var(--hair);color:var(--muted);
+  font-size:12.6px;text-align:center}
+
+@media (max-width:960px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){
+  body{line-height:1.82}
+  .cards{grid-template-columns:minmax(0,1fr)}
+  .hero{border-radius:22px}
+  .hero::before{width:300px;height:300px;left:-120px;top:-130px}
+  .hero::after{width:260px;height:260px;right:-90px;bottom:-120px}
+  table{min-width:430px;font-size:13px}
+  th,td{padding:10px 12px}
+  h3{font-size:15.6px}
+  .tools{padding-left:6px}
+  nav.pills a{font-size:12px;padding:6px 12px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto}}
+@media print{
+  nav.pills,.progress,#top,.cp,.tools,.dotrule,body::before{display:none!important}
+  body{background:#fff;color:#111}
+  .hero,.tw,figure.code,.card,.note{box-shadow:none}
+  .hero,.tw,.card,.note{background:#fff;border:1px solid #E2DCD4}
+  figure.code{background:#FAF7F2}
+  figure.code code{color:#2C2A28;white-space:pre-wrap}
+  .sec,table,figure.code,li{break-inside:avoid}
+  .wrap{max-width:none;padding:0}
+  a{color:#111}
+}</style>
+</head>
+<body>
+<script>try{var m=localStorage.getItem('clean-style-theme')||'dark';var d=(m==='dark')||(m==='auto'&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light')}catch(e){}</script>
+<div class="progress"><i></i></div>
+<nav class="pills" aria-label="章节导航"><a href="#s1" data-t="一">主题</a><a href="#s2" data-t="二">组件</a><a href="#s3" data-t="三">适配</a><a href="#s4" data-t="四">验收</a>
+<span class="tools"><button class="tbtn" id="theme" type="button">浅色</button></span></nav>
+<div class="wrap">
+<header class="hero">
+<div class="kicker"><i></i>CLEAN STYLE EDITION</div>
+<h1>简洁风格页面 · 组件样例</h1>
+<p class="lede">这是 build_page.py 的样例源文件，覆盖全部结构件：Hero、目录卡、药丸导航、无边框表格、自定义列表符、提示块、代码块与分隔线。用它验证两套主题的观感。</p>
+<div class="chips"><span class="chip">明亮清新</span><span class="chip">暗黑忧郁</span><span class="chip">单文件零依赖</span><span class="chip">可打印</span></div>
+</header>
+<div class="cards"><a class="card a" href="#s1"><span class="n">01</span><span class="t">两套主题</span><span class="d">同一文件内切换，首屏主题由 --theme 决定</span></a><a class="card b" href="#s2"><span class="n">02</span><span class="t">结构件</span><span class="d">导航、卡片、表格、代码块、提示、分隔线</span></a><a class="card a" href="#s3"><span class="n">03</span><span class="t">响应式</span><span class="d">960 / 600 两个断点，手机平板电脑通吃</span></a><a class="card b" href="#s4"><span class="n">04</span><span class="t">验收</span><span class="d">脚本自检 + 浏览器实测两道关</span></a></div>
+<section id="s1" class="sec"><h2><span class="badge">一</span><span>两套主题</span></h2>
+<p>一个 HTML 文件里同时装两套主题，靠 <code>data-theme</code> 切换，右上角按钮三态循环。</p>
+<div class="tw"><table><thead><tr><th>主题</th><th>气质</th><th>主点色</th><th>次点色</th></tr></thead><tbody><tr><td>明亮清新</td><td>暖纸、白纸卡、清透</td><td>青绿 <code>#17A398</code></td><td>陶土 <code>#D2705F</code></td></tr><tr><td>暗黑忧郁</td><td>石墨蓝、雾面、低饱和</td><td>雾蓝 <code>#7FA8C9</code></td><td>暗紫 <code>#A98BB0</code></td></tr></tbody></table></div>
+<aside class="note">首屏默认哪套由 <code>--theme</code> 决定，用户的手动选择存 <code>localStorage</code>，刷新不闪白。</aside>
+</section>
+<section id="s2" class="sec"><h2><span class="badge">二</span><span>结构件</span></h2>
+<p>页面骨架由这几件组成，全部只认 CSS 变量，换主题不动结构：</p>
+<ol><li>吸顶药丸导航<span class="sub">窄屏横向滑动，当前章节高亮</span></li><li>顶部 3px 渐变阅读进度条<span class="sub">双色渐变，滚动即时更新</span></li><li>目录卡<span class="sub">4 张，悬浮抬起 7px，960px 以下两列、600px 以下一列</span></li><li>无边框表格<span class="sub">表头浅底小字、行间发丝线、悬浮微染、外层容器自己横滚</span></li><li>自定义列表符<span class="sub">无序小圆点、有序浅底数字圆</span></li></ol>
+<div class="dotrule" role="separator"><span>&middot; &middot; &middot;</span></div>
+<p>代码块带标题栏和复制按钮，浅色主题下也是浅底，不再是一整块黑：</p>
+<figure class="code"><figcaption><span>结构件</span><button class="cp" type="button" aria-label="复制代码">复制</button></figcaption><pre><code>python scripts/build_page.py example/demo.md -o demo.html --theme light
+python scripts/check_page.py example/demo.md demo.html</code></pre></figure>
+</section>
+<section id="s3" class="sec"><h2><span class="badge">三</span><span>响应式</span></h2>
+<ul><li>960px 以下：目录卡 4 → 2 列</li><li>600px 以下：目录卡 1 列，Hero 圆角收到 22px，色晕缩小，表格字号 13px</li><li>表格 <code>min-width:430px</code> 放在 <code>overflow-x:auto</code> 容器里，页面本身不产生横向滚动</li><li><code>prefers-reduced-motion</code> 关掉所有过渡，<code>@media print</code> 去掉导航与阴影</li></ul>
+</section>
+<section id="s4" class="sec"><h2><span class="badge">四</span><span>验收</span></h2>
+<div class="tw"><table><thead><tr><th>检查项</th><th>手段</th><th>通过标准</th></tr></thead><tbody><tr><td>标签配平</td><td><code>check_page.py</code></td><td>每类标签开合数相等</td></tr><tr><td>内容零丢失</td><td><code>check_page.py</code></td><td>源 md 每行都在产物里</td></tr><tr><td>对比度</td><td><code>check_page.py</code></td><td>小字 ≥ 4.5，大字 ≥ 3.0</td></tr><tr><td>无横向溢出</td><td>浏览器读 <code>scrollWidth</code></td><td>等于视口宽</td></tr><tr><td>主题与交互</td><td>浏览器点按</td><td>三态循环、进度条、复制、回顶都生效</td></tr></tbody></table></div>
+<aside class="note">截图不可用时如实说明：计算样式能证明配色与布局，证明不了观感，别把「验证通过」说成「好看了」。</aside>
+</section>
+<div class="foot">由 webdesign 简洁风格美化 skill 生成 · 样例内容不含任何真实数据</div>
+</div>
+<button id="top" type="button" aria-label="回到顶部">&uarr;</button>
+<script>
+(function(){
+  var K="clean-style-theme", root=document.documentElement, btn=document.getElementById("theme");
+  var mq=window.matchMedia("(prefers-color-scheme: dark)");
+  var mode="dark"; try{ mode=localStorage.getItem(K)||"dark"; }catch(e){}
+  function paint(){
+    var dark = mode==="auto" ? mq.matches : mode==="dark";
+    root.setAttribute("data-theme", dark?"dark":"light");
+    btn.textContent = mode==="auto" ? "跟随系统" : (dark?"深色":"浅色");
+    btn.classList.toggle("act", mode!=="light");
+  }
+  btn.onclick=function(){ mode = mode==="light"?"dark":(mode==="dark"?"auto":"light");
+    try{ mode==="light"?localStorage.removeItem(K):localStorage.setItem(K,mode); }catch(e){} paint(); };
+  if(mq.addEventListener) mq.addEventListener("change",function(){ if(mode==="auto") paint(); });
+  paint();
+
+  var bar=document.querySelector(".progress i"), topBtn=document.getElementById("top");
+  function onScroll(){
+    var max=root.scrollHeight-root.clientHeight, y=root.scrollTop||document.body.scrollTop;
+    bar.style.width=(max>0?y/max*100:0)+"%";
+    topBtn.classList.toggle("show",y>480);
+  }
+  addEventListener("scroll",onScroll,{passive:true}); addEventListener("resize",onScroll); onScroll();
+  topBtn.onclick=function(){ scrollTo({top:0,behavior:"smooth"}); };
+
+  Array.prototype.forEach.call(document.querySelectorAll("figure.code"),function(f){
+    var b=f.querySelector(".cp"); if(!b) return;
+    b.onclick=function(){
+      var t=f.querySelector("code").innerText;
+      function ok(){ b.textContent="已复制"; b.classList.add("ok");
+        setTimeout(function(){ b.textContent="复制"; b.classList.remove("ok"); },1500); }
+      function fb(){ var r=document.createRange(); r.selectNodeContents(f.querySelector("code"));
+        var s=getSelection(); s.removeAllRanges(); s.addRange(r);
+        try{ document.execCommand("copy"); ok(); }catch(e){ b.textContent="请手动复制"; }
+        s.removeAllRanges(); }
+      (navigator.clipboard&&navigator.clipboard.writeText)?navigator.clipboard.writeText(t).then(ok,fb):fb();
+    };
+  });
+
+  var links=Array.prototype.slice.call(document.querySelectorAll("nav.pills a[data-t]"));
+  var byId={}; links.forEach(function(l){ byId[l.getAttribute("href").slice(1)]=l; });
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){
+      var hit=null;
+      es.forEach(function(e){ if(e.isIntersecting && (hit===null || e.boundingClientRect.top<hit.boundingClientRect.top)) hit=e; });
+      if(hit && byId[hit.target.id]){
+        links.forEach(function(l){ l.classList.remove("on"); });
+        byId[hit.target.id].classList.add("on");
+      }
+    },{rootMargin:"-14% 0px -70% 0px",threshold:0});
+    Array.prototype.forEach.call(document.querySelectorAll("section.sec"),function(s){ io.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
