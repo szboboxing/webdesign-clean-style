@@ -1,3 +1,5 @@
 __pycache__/
 *.pyc
 .DS_Store
+
+.git/gh_known_hosts
