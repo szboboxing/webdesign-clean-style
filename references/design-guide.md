@@ -105,7 +105,11 @@
   拿到的是过渡中间值（甚至旧值）。要验 token 是否生效，读
   `getComputedStyle(document.documentElement).getPropertyValue('--bg')`，别读 body 的背景色。
 - **隐藏页面里 scroll / IntersectionObserver 不推进**：无头或被隐藏的浏览器里程序化 `scrollTo` 可能不派发滚动事件，
-  进度条读到 0%。手动 `dispatchEvent(new Event('scroll'))` 再读，才能区分"没生效"和"没被触发"。
+  进度条读到 0%。先手动 `dispatchEvent(new Event('scroll'))` 再读，才能区分"没生效"和"没被触发"。
+  若连 `documentElement.scrollTop = N` 都读回 0（这个表面根本没有可滚动视口），进度条与回顶按钮就**测不了**，
+  交付时如实说明，别把"计算样式正确"说成"滚动交互验证过了"。
+- **指令注释不能出现在代码块里被当真**：文档若要示范 `<!-- chips: ... -->` 这类指令，`directives()` 必须先把
+  ``` 围栏内的内容剔掉再扫描，否则示例会覆盖真实指令（chips 被换成"标签一/标签二"、cards 多出一张）。
 - **列表首项最容易丢**：md 列表解析要先用第一行播种 `items`，再进循环，否则每个列表少一条。
 - **表格宽度**：给 `table` 设 `min-width` 时必须同时保证外层容器 `overflow-x:auto`，否则窄屏整页横向滚动。
 - **色晕溢出**：`.hero` 少了 `overflow:hidden`，两团 blur 圆会撑出横向滚动条。

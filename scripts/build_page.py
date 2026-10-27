@@ -71,7 +71,8 @@ def is_sep(row):
 def directives(md):
     """Pull the optional <!-- key: value --> directives out of the source."""
     d = {"cards": []}
-    for m in re.finditer(r"<!--\s*([a-z-]+)\s*:\s*(.*?)\s*-->", md, re.S):
+    src = re.sub(r"(?ms)^```.*?^```", "", md)
+    for m in re.finditer(r"<!--\s*([a-z-]+)\s*:\s*(.*?)\s*-->", src, re.S):
         k, v = m.group(1), m.group(2).strip()
         if k == "cards":
             d["cards"].append([c.strip() for c in v.split("|")])

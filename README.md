@@ -3,6 +3,10 @@
 一个 Qoder Skill：把 Markdown 文档渲染成**单文件、零依赖、可直接双击打开**的美化 HTML 页面。
 一套骨架、两张皮肤，手机 / 平板 / 电脑三端自适应，明暗主题可切换并记忆。
 
+| 明亮清新版（默认首屏） | 暗黑忧郁版 |
+|:---:|:---:|
+| ![明亮清新版预览](preview-light.png) | ![暗黑忧郁版预览](preview-dark.png) |
+
 ## 两套皮肤
 
 | | 明亮清新版 | 暗黑忧郁版 |
@@ -91,6 +95,8 @@ python scripts/check_page.py example/demo.md demo-light.html
 ```
 webdesign-网页简洁风格美化-202610v1.1/
 ├── SKILL.md                    # skill 主文件：触发条件、皮肤选择、工作流、硬性约束
+├── preview-light.png           # 明亮清新版截图（headless Edge，1280x1600）
+├── preview-dark.png            # 暗黑忧郁版截图（同上）
 ├── scripts/
 │   ├── build_page.py           # md -> 单文件 HTML（双主题 + 全部结构件）
 │   └── check_page.py           # 无浏览器自检，FAIL 时退出码 1
